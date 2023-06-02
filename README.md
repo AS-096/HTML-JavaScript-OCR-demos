@@ -15,6 +15,7 @@ However, the image input needs to be very clear (not borders, lines or anything 
 The other one I tried is Pen to Print. It's perfect for recognizing handwriting.
 However, an [API key](https://rapidapi.com/serendi/api/pen-to-print-handwriting-ocr) is needed.
 > Simply sign in (or sign up for) [RapidAPI](https://rapidapi.com/serendi/api/pen-to-print-handwriting-ocr) and subscribe to any Pen to Print plan to get a key.
+
 The documentation is very limited, and there's a hard limit of 100 calls per month without paying.
 It takes me some time to make it work but it really works flawlessly.
 
