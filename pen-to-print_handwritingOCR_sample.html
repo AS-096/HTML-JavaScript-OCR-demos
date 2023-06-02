@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+    <!--
+        The API is on "https://rapidapi.com/serendi/api/pen-to-print-handwriting-ocr"
+        Working example of "Pen to Print" handwriting recognition OCR API in HTML.
+        "Pen to Print" could recognize handwritings pretty well, far better than Tesseract.js v4
+        Code is based on the modification of my other OCR sample "tesseractV4-sample.html" and the API snippet from the above api site's "(JavaScript)fetch" section.
+        but instead of outputting to console, it outputs to a textarea so users could easily copy and edit information. 
+        You may embed this into any websites easily just by copy and paste, but remember to put your API key in
+        Also remember adding CSS styles.
+    -->
+    <head>
+    </head>
+    <body>
+        <div>
+            <!--
+                Not sure what file it accepts due to lack of documentation. 
+                Only tried .jpg, but not .png, so it may not work 
+            -->
+            <input type="file" id="uploader" accept=".jpg, .jpeg, .png">
+        </div>
+        <div>
+            <textarea id="image-text"></textarea>
+        </div>
+
+        <script type="module">
+            const recognize = async function(evt){
+                const url = 'https://pen-to-print-handwriting-ocr.p.rapidapi.com/recognize/';
+                const data = new FormData();
+                data.append('srcImg', evt.target.files[0]);
+                data.append('Session', 'string');
+
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        // Replace "your API key" below with your API key. You may get your key by signing up in RapidAPI and subscribe to any plans provided by Pen to Print.
+                        // For basic plan, it cost nothing and no credit card needed to try it out, maxing out with a hard limit of 100 calls per month.
+                        'X-RapidAPI-Key': 'your API key',
+                        'X-RapidAPI-Host': 'pen-to-print-handwriting-ocr.p.rapidapi.com'
+                    },
+                    body: data
+                };
+
+                const response = await fetch(url, options);
+                const result = await response.text();
+                console.log(result);
+
+                // extracts the actual characters in the imgae
+                const returnedresult = JSON.parse(result);
+                // put the characters into the textarea if it succeeded 
+                if (returnedresult.value != null){
+                    document.getElementById('image-text').innerHTML = returnedresult.value;
+                } else if (returnedresult.message != null){
+                    // return message if there is a message but no 'value'
+                    document.getElementById('image-text').innerHTML = returnedresult.message;
+                } else if (returnedresult.error != null){
+                    // return error if there is no 'message' nor 'value'
+                    document.getElementById('image-text').innerHTML = returnedresult.error;
+                } else {
+                    console.error("error");
+                }
+
+            }
+            const elm = document.getElementById('uploader');
+            elm.addEventListener('change', recognize);
+        </script>
+    </body>
+</html>
