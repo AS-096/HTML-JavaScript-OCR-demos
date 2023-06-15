@@ -49,13 +49,13 @@
                 const returnedresult = JSON.parse(result);
                 // put the characters into the textarea if it succeeded 
                 if (returnedresult.value != null){
-                    document.getElementById('image-text').innerHTML = returnedresult.value;
+                    document.getElementById('image-text').value = returnedresult.value;
                 } else if (returnedresult.message != null){
                     // return message if there is a message but no 'value'
-                    document.getElementById('image-text').innerHTML = returnedresult.message;
+                    document.getElementById('image-text').value = returnedresult.message;
                 } else if (returnedresult.error != null){
                     // return error if there is no 'message' nor 'value'
-                    document.getElementById('image-text').innerHTML = returnedresult.error;
+                    document.getElementById('image-text').value = returnedresult.error;
                 } else {
                     console.error("error");
                 }
