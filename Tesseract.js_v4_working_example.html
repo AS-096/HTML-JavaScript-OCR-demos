@@ -42,7 +42,7 @@
             // using Tesseract.js to recognize characters
             const ret = await worker.recognize(files[0]);
             // output to the textarea in th HTML
-            document.getElementById('image-text').innerHTML = ret.data.text;
+            document.getElementById('image-text').value = ret.data.text;
 
         }
 
